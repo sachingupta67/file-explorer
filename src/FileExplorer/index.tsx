@@ -1,8 +1,9 @@
 import { useState } from "react";
-import "./styles.css"
+import "./styles.css";
 import CustomImg from "./CustomImg";
 import icons from "./icon";
 import { IParentData } from "./interface";
+import CustomContextMenu from "../CustomContextMenu";
 
 const FileExplorer: React.FC<{ files: IParentData }> = ({ files }) => {
   const [isExpanded, toggleExpanded] = useState(false); // to track folder expansion
@@ -21,18 +22,23 @@ const FileExplorer: React.FC<{ files: IParentData }> = ({ files }) => {
   if (files.type === "file") {
     return (
       <div
-        className={`file-name ${isSelected ? 'selected' : ''}`}
+        className={`file-name ${isSelected ? "selected" : ""}`}
         onClick={handleFileClick}
       >
-        <CustomImg url={files.imgUrl || ''} /> {files.name}
+        <CustomContextMenu fileName={files.name}>
+          <CustomImg url={files.imgUrl || ""} /> {files.name}
+        </CustomContextMenu>
       </div>
     );
   }
 
   return (
     <div className="folder">
-      <div className={`folder-title ${isSelected ? 'selected' : ''}`} onClick={handleFolderClick}>
-        <CustomImg url={files.imgUrl || ''} /> {files.name}
+      <div
+        className={`folder-title ${isSelected ? "selected" : ""}`}
+        onClick={handleFolderClick}
+      >
+        <CustomImg url={files.imgUrl || ""} /> {files.name}
         <CustomImg
           url={isExpanded ? icons.sortDown : icons.sortUp}
           height="10px"
