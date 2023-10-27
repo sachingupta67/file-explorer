@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from "react";
 
 const ContextMenu: React.FC<{
@@ -11,10 +12,11 @@ const ContextMenu: React.FC<{
   });
   const contextMenuRef = useRef(null);
 
-  const handleContextMenu = (event: MouseEvent) => {
+  const handleContextMenu :any = (event: MouseEvent) => {
     event.preventDefault();
     setShowContextMenu(true);
     setContextMenuPosition({ x: event.clientX, y: event.clientY });
+    
   };
 
   const handleMenuItemClick = (type = "") => {
@@ -27,10 +29,11 @@ const ContextMenu: React.FC<{
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside= (event: MouseEvent) => {
       if (
         contextMenuRef.current &&
-        !contextMenuRef.current.contains(event.target)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        !(contextMenuRef as any).current.contains(event.target)
       ) {
         closeContextMenu();
       }
@@ -48,7 +51,7 @@ const ContextMenu: React.FC<{
   }, [showContextMenu]);
 
   return (
-    <div onContextMenu={handleContextMenu}>
+    <div onContextMenu={handleContextMenu} ref={contextMenuRef}>
       {children}
       {showContextMenu && (
         <div
