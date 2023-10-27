@@ -1,10 +1,11 @@
 import FileExplorer from "./FileExplorer";
 import icons from "./FileExplorer/icon";
+import { IParentData } from "./FileExplorer/interface";
 
 const FOLDER_ICON = icons.folder;
 const FILE_ICON = icons.file;
 
-const filesData = {
+const filesData:IParentData = {
   type: "folder",
   name: "parent",
   data: [
